@@ -9,10 +9,14 @@ var currentIndex = 0;
       var gitLink = "https://github.com" + person.git_username;
       $("#person-name").text(person.name);
       $("#person-shoutout").text(person.shoutout);
-      $("#person-git").attr("href", gitLink)
+      $("#person-git").attr("href", gitLink + person.git_username);
     }
 
   $('#next').on('click', function() {
+    for (var i = 0; i < people.length; i++);
+    currentIndex++;
+
+
 
    //console.log('This is my ' + data);
       console.log("clicked");
@@ -21,7 +25,7 @@ var currentIndex = 0;
 
   $('#prev').on('click', function () {
       console.log("clicked");
-  })
+  });
   function loadData() {
     $.ajax({
       type: "GET",
@@ -29,18 +33,13 @@ var currentIndex = 0;
       success: function(data){   //fetches the data from server
          people = data.omicron;
          showPerson();
-
-
-}
-
-
-
       },
      error: function () {
         console.log('Error with request');    //displays error if data request cannot be fulfilled.
       }
 
     });
+  }
 });
 
 
