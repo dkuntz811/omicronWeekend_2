@@ -12,17 +12,29 @@ var currentIndex = 0;
       $("#person-git").attr("href", gitLink + person.git_username);
     }
 
-  $('#next').on('click', function() {
-    for (var i = 0; i < people.length; i++);
+  $('#next').on('click', nextPerson);
+  function nextPerson () {
     currentIndex++;
+    if (currentIndex >= people.length) {
+       currentIndex = 0;
+  }
 
+  showPerson();
+  updateTracker();
+}
 
-
+function prevPerson () {
+   currentIndex--;
+   if (currentIndex < 0) {
+     currentIndex = 1;
+   }
+   showPerson ();
+   updateTracker();
+}
    //console.log('This is my ' + data);
       console.log("clicked");
 
   });
-
   $('#prev').on('click', function () {
       console.log("clicked");
   });
@@ -33,14 +45,38 @@ var currentIndex = 0;
       success: function(data){   //fetches the data from server
          people = data.omicron;
          showPerson();
+         createTracker();
       },
      error: function () {
         console.log('Error with request');    //displays error if data request cannot be fulfilled.
       }
 
     });
-  }
-});
+}
+function createTracker () {
+  people.forEach (function (persion, i) {
+    $("#tracker-container").append("<li>" + i  + "</li>")
+    $("#tracker-container").children().last().data("index", i);
+  });
+  updateTracker();
+}
+
+function updateTracker () {
+  $("#tracker-container").children().each(function(i, item) {
+    if($(this).data("index") == currentIndex) {
+      $(this).addClass("current");
+    }
+    else {
+      $(this).removeClass("current");
+    }
+  })
+}
+
+
+}
+
+
+
 
 
 
