@@ -1,6 +1,17 @@
-$(document).ready(function(){
-  //$('#ajax-data').remove();
-  //$('#ajax-data').append(data.omicron);
+var people = [];
+var currentIndex = 0;
+
+  $(document).ready(function(){
+    loadData();
+
+    function showPerson () {
+      var person = people[currentIndex];
+      var gitLink = "https://github.com" + person.git_username;
+      $("#person-name").text(person.name);
+      $("#person-shoutout").text(person.shoutout);
+      $("#person-git").attr("href", gitLink)
+    }
+
   $('#next').on('click', function() {
 
    //console.log('This is my ' + data);
@@ -11,25 +22,21 @@ $(document).ready(function(){
   $('#prev').on('click', function () {
       console.log("clicked");
   })
+  function loadData() {
     $.ajax({
       type: "GET",
       url: "/data",
       success: function(data){   //fetches the data from server
-
-        for (var i = 0; i < data.omicron.length; i ++) {
-          $('#ajax-data').append('<div class="omicron"></div>'); //creates a div to append data
-          var $el = $('#ajax-data').children().last();
-          $el.append('<h2>' + "Name: " + data.omicron[i].name + '</h2>');  //appends name to div
-          $el.append('<h2>' + "Git username: " + data.omicron[i].git_username+ '</h2>'); //appends git_username to div
-          $el.append('<h3>' + "Shoutout: " + data.omicron[i].shoutout + '</h3>'); //appends shoutout to div
-        }
+         people = data.omicron;
+         showPerson();
 
 
-      console.log(data.omicron);
+}
+
 
 
       },
-      error: function () {
+     error: function () {
         console.log('Error with request');    //displays error if data request cannot be fulfilled.
       }
 
@@ -37,9 +44,7 @@ $(document).ready(function(){
 });
 
 
-var studentArray = [];
 
-function
 
 
 
