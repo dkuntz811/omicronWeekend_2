@@ -70,10 +70,10 @@ function updateTracker () {
       $(this).removeClass("current");
     }
   })
-}
 
 
-}
+
+};
 
 
 
